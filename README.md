@@ -5,7 +5,7 @@
 1. Reverse Proxy the one target
 2. Cache filetypes
 3. Cache specific pages
-4. Docker Image available
+4. Docker Image available ([Dockerfile](https://github.com/SwitzerChees/gocacheproxy/blob/master/Dockerfile))
 
 ## Getting Started
 
