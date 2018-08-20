@@ -9,7 +9,7 @@
 
 ## Getting Started
 
-These instructions will cover usage information about the go application and for the docker container image. This reverse proxy only supports HTTP (no HTTPS support for target)
+These instructions will cover usage information about the go application and for the docker container image. This reverse proxy only supports HTTP (no HTTPS support for target). Speed up TTFB up to 1 - 15 ms.
 
 ### Prerequisities
 
@@ -26,7 +26,13 @@ In order to run this container you'll need docker installed.
 Start a simple reverse proxy container to localhost:8080
 
 ```shell
-docker run -e PROXY_PORT=80 -e PROXY_TARGET=http://localhost:8080 -e CONFIG_FILE= /config/cache.config switzerchees/gocacheproxy
+docker run -p 80:80 -e PROXY_PORT=80 -e PROXY_TARGET=http://localhost:8080 -e CONFIG_FILE= /config/cache.config --name gocacheproxy switzerchees/gocacheproxy
+```
+
+Link the reverse proxy with a webapp for caching between
+
+```shell
+docker run -p 80:80 -e PROXY_TARGET=http://wordpress:80 --link wordpress:wordpress --name gocacheproxy switzerchees/gocacheproxy
 ```
 
 ## Enpoints
@@ -44,6 +50,16 @@ docker run -e PROXY_PORT=80 -e PROXY_TARGET=http://localhost:8080 -e CONFIG_FILE
 
 ## Configuration File
 
-* `.jpg` - The files with the ending .jpg are generaly cached
+* `{mimetype}image/jpeg` - The files with the ending mime-type jpeg are cached
 * `{page}/` - With the prefix {page} you can specify a specific page or resource to cache
-* `.{fileending}` - You can add as many filetype endings to the /config/cache.config file (One per line)
+
+## Configuration File Default
+
+* {mimetype}text/css
+* {mimetype}application/javascript
+* {mimetype}text/javascript
+* {mimetype}image/jpeg
+* {mimetype}image/gif
+* {mimetype}image/png
+* {mimetype}image/svg+xml
+* {page}/

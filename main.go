@@ -30,7 +30,7 @@ type transport struct {
 }
 
 type cache struct {
-	fileTypes []string
+	mimeTypes []string
 	pages     []string
 	responses map[string]cachedResponse
 }
@@ -105,18 +105,18 @@ func newCache(configFile *string) *cache {
 		//Do something
 	}
 	cleanLines := strings.Replace(string(content), "\r", "", -1)
-	var fileTypes []string
+	var mimeTypes []string
 	var pages []string
 	for _, str := range strings.Split(cleanLines, "\n") {
 		if str != "" {
 			if strings.Contains(str, "{page}") {
 				pages = append(pages, strings.Replace(str, "{page}", "", -1))
-			} else {
-				fileTypes = append(fileTypes, str)
+			} else if strings.Contains(str, "{mimetype}") {
+				mimeTypes = append(mimeTypes, strings.Replace(str, "{mimetype}", "", -1))
 			}
 		}
 	}
-	return &cache{responses: map[string]cachedResponse{}, fileTypes: fileTypes, pages: pages}
+	return &cache{responses: map[string]cachedResponse{}, mimeTypes: mimeTypes, pages: pages}
 }
 
 func newProxy(target string) *prox {
@@ -187,8 +187,10 @@ func (t *transport) RoundTrip(req *http.Request) (resp *http.Response, err error
 
 		var isC bool
 
-		for _, str := range c.fileTypes {
-			if strings.Contains(req.RequestURI, str) {
+		cType := resp.Header.Get("content-type")
+
+		for _, a := range c.mimeTypes {
+			if strings.Contains(cType, a) {
 				isC = true
 				break
 			}

@@ -13,7 +13,7 @@
             "port": 2345,
             "host": "127.0.0.1",
             "program": "${fileDirname}",
-            "env": {"PROXY_CACHE_HTTP_HEADER":"X-WiseProxy", "PROXY_TARGET": "http://localhost:51953"},
+            "env": {"PROXY_CACHE_HTTP_HEADER":"X-WiseProxy", "PROXY_TARGET": "http://localhost:90"},
             "args": [],
             "showLog": false
         }
