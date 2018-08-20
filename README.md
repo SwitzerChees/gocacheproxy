@@ -1,11 +1,11 @@
-# Reverse HTTP Proxy In Go With In Memory Caching
+# Reverse HTTP Proxy In Go With InMemory Caching
 
 ## Features
 
 1. Reverse Proxy the one target
 2. Cache filetypes
 3. Cache specific pages
-4. Docker Image compatible
+4. Docker Image available
 
 ## Getting Started
 
@@ -26,7 +26,7 @@ In order to run this container you'll need docker installed.
 Start a simple reverse proxy container to localhost:8080
 
 ```shell
-docker run -e PROXY_PORT=80 -e PROXY_TARGET=http://localhost:8080 -e CONFIG_FILE= /config/cache.config switzerchees/reverse-cache-proxy
+docker run -e PROXY_PORT=80 -e PROXY_TARGET=http://localhost:8080 -e CONFIG_FILE= /config/cache.config switzerchees/gocacheproxy
 ```
 
 ## Enpoints
@@ -41,3 +41,9 @@ docker run -e PROXY_PORT=80 -e PROXY_TARGET=http://localhost:8080 -e CONFIG_FILE
 * `PROXY_TARGET` - Target to redirect traffic (Default: http://localhost:8080)
 * `CONFIG_FILE` - Path to the configuration files for define files to cache (Default: /config/cache.config)
 * `PROXY_CACHE_HTTP_HEADER` - Header to Check if File comes from cache (Default: X-GoProxy: FromCache im file comes from the reverse proxy cache)
+
+## Configuration File
+
+* `.jpg` - The files with the ending .jpg are generaly cached
+* `{page}/` - With the prefix {page} you can specify a specific page or resource to cache
+* `.{fileending}` - You can add as many filetype endings to the /config/cache.config file (One per line)
