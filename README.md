@@ -39,7 +39,7 @@ docker run -p 80:80 -e PROXY_TARGET=http://wordpress:80 --link wordpress:wordpre
 
 1. `/healthcheck` - Check if the webserver is running (httpstatus 200 success)
 2. `/flushcache` - flush the actual cache
-3. `/flushcache` - activate or deactivate the cache functionality (POST allows toggle)
+3. `/cacheactive` - activate or deactivate the cache functionality (POST allows toggle)
 
 ## Environment Variables
 
